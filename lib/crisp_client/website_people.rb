@@ -1,6 +1,6 @@
 module WebsitePeople
   # https://docs.crisp.im/api/v1/#website-website-people-get
-  def get_people_statistics(website_id)
+  def get_people_statistics(website_id:)
     client_get("/website/#{website_id}/people/stats")["data"]
   end
 
@@ -11,9 +11,9 @@ module WebsitePeople
   end
 
   # https://docs.crisp.im/api/v1/#website-website-people-post
-  def add_new_people_profile(website_id, name, email)
+  def add_new_people_profile(website_id:, nickname:, email:)
     self.class.post("/website/#{website_id}/people/profile",
-      body: { email: email, person: { nickname: name } }.to_json,
+      body: { email: email, person: { nickname: nickname } }.to_json,
       headers: { 'Content-Type' => 'application/json' }.merge(@auth))
   end
 
