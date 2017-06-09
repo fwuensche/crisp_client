@@ -12,14 +12,21 @@ module WebsitePeople
 
   # https://docs.crisp.im/api/v1/#website-website-people-post
   def add_new_people_profile(website_id:, nickname:, email:)
-    self.class.post("/website/#{website_id}/people/profile",
+    response = self.class.post("/website/#{website_id}/people/profile",
       body: { email: email, person: { nickname: nickname } }.to_json,
       headers: { 'Content-Type' => 'application/json' }.merge(@auth))
+
+    if response["error"] == false
+      return response["data"]["people_id"]
+    else
+      raise response["reason"]
+    end
   end
 
   # https://docs.crisp.im/api/v1/#website-website-people-delete
   def remove_people_profile(website_id:, people_id:)
-    self.class.delete("/website/#{website_id}/people/profile/#{people_id}",
+    response = self.class.delete("/website/#{website_id}/people/profile/#{people_id}",
       headers: { 'Content-Type' => 'application/json' }.merge(@auth))
+    return response["reason"]
   end
 end

@@ -3,7 +3,6 @@ require "crisp_client/user_availability"
 require "crisp_client/list_websites"
 require "crisp_client/website_people"
 require "httparty"
-# require "byebug"
 
 module CrispClient
   class Base
@@ -14,7 +13,7 @@ module CrispClient
 
     base_uri "https://api.crisp.im/v1"
 
-    def initialize(email, password)
+    def initialize(email:, password:)
       @email = email
       @password = password
     end
