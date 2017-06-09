@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Flavio Wuensche"]
   spec.email         = ["f.wuensche@gmail.com"]
 
-  spec.summary       = %q{Crisp API Ruby Wrapper}
+  spec.summary       = %q{Ruby Client for Crisp API}
   spec.description   = %q{Use ruby syntax to manipulate your Crisp data}
   spec.homepage      = "https://github.com/fwuensche/crisp_client"
   spec.license       = "MIT"
