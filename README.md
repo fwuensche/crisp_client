@@ -5,7 +5,8 @@
 ## Usage
 
 ```ruby
-cc = CrispClient::Base.new(email: ENV['CRISP_EMAIL'], password: ENV['CRISP_PASSWORD']).authenticate
+cc = CrispClient::Base.new(email: ENV['CRISP_EMAIL'], password: ENV['CRISP_PASSWORD'])
+cc.authenticate
 #=> {"Authorization"=>"Basic MmjjiyAjSLuMmjjiyAjSLuMmjjiyAjSLuMmjjiyAjSLuMmjjiyAiaiIyMGUyYTdjYzA="}
 
 website_id = cc.find_website_id_by_name(website_name: "Touts")
@@ -17,12 +18,18 @@ cc.get_people_statistics(website_id: website_id)
 person_id = cc.add_new_people_profile(website_id: website_id, nickname: "Flavio Wuensche", email: "flavio@touts.com.br")
 #=> "cd71e876-62e4-17hs-b6c2-570f44b3d83b"
 cc.add_new_people_profile(website_id: website_id, nickname: "Flavio Wuensche", email: "flavio@touts.com.br")
-#   RuntimeError: people_exists
+#=> RuntimeError: people_exists
 
 cc.remove_people_profile(website_id: website_id, people_id: person_id)
 #=> "deleted"
 cc.remove_people_profile(website_id: website_id, people_id: person_id)
 #=> "people_not_found"
+
+cc.list_people_profiles(website_id: website_id)
+#=> will return the first 20 users by default
+cc.list_people_profiles(website_id: website_id, page_number: 2)
+#=> will return the next 20 users
+# Other parameters you can use include: sort_field, sort_order, search_operator, search_filter
 ```
 
 ## Installation
