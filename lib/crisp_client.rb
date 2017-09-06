@@ -2,6 +2,7 @@ require "crisp_client/version"
 require "crisp_client/user_availability"
 require "crisp_client/list_websites"
 require "crisp_client/website_people"
+#require "crisp_client/website_conversation"
 require "httparty"
 
 module CrispClient
@@ -10,6 +11,7 @@ module CrispClient
     include UserAvailability
     include ListWebsites
     include WebsitePeople
+    #include WebsiteConversation
 
     base_uri "https://api.crisp.im/v1"
 

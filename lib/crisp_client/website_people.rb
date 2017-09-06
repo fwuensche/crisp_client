@@ -1,4 +1,20 @@
 module WebsitePeople
+  #TEST TEST TEST TEST TEST TEST TEST
+  
+  # https://docs.crisp.chat/api/v1/#website-website-conversation-post
+	def create_a_new_conversation(website_id:)
+    response = self.class.post("/website/#{website_id}/conversation",
+      headers: { 'Content-Type' => 'application/json' }.merge(@auth))
+
+    if response["error"] == false
+      return response["data"]
+    else
+      raise response["reason"]
+    end
+	end
+  
+  #TEST TEST TEST TEST TEST TEST TEST
+
   # https://docs.crisp.im/api/v1/#website-website-people-get
   def get_people_statistics(website_id:)
     client_get("/website/#{website_id}/people/stats")["data"]
