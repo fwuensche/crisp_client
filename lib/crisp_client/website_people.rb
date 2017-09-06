@@ -1,5 +1,5 @@
 module WebsitePeople
-  #TEST TEST TEST TEST TEST TEST TEST
+  # ***** TEMPORARY *****
   
   # https://docs.crisp.chat/api/v1/#website-website-conversation-post
 	def create_a_new_conversation(website_id:)
@@ -13,7 +13,19 @@ module WebsitePeople
     end
 	end
   
-  #TEST TEST TEST TEST TEST TEST TEST
+  def update_conversation_metas(website_id:, session_id:, meta)
+    response = self.class.patch("/website/#{website_id}/conversation/#{session_id}/meta",
+      body: { email: email, person: { nickname: nickname } }.to_json,
+      headers: { 'Content-Type' => 'application/json' }.merge(@auth))
+
+    if response["error"] == false
+      return response["data"]
+    else
+      raise response["reason"]
+    end
+  end
+
+  # ***** TEMPORARY *****
 
   # https://docs.crisp.im/api/v1/#website-website-people-get
   def get_people_statistics(website_id:)
