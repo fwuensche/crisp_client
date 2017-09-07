@@ -11,8 +11,9 @@ module WebsitePeople
     else
       raise response["reason"]
     end
-	end
+  end
   
+  # https://docs.crisp.chat/api/v1/#website-website-conversation-patch-4
   def update_conversation_metas(website_id:, session_id:, meta:)
     response = self.class.patch("/website/#{website_id}/conversation/#{session_id}/meta",
       body: meta.to_json,
