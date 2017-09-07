@@ -13,12 +13,12 @@ module WebsitePeople
     end
 	end
   
-  def update_conversation_metas(website_id:, session_id:, meta)
+  def update_conversation_metas(website_id:, session_id:, meta:)
     response = self.class.patch("/website/#{website_id}/conversation/#{session_id}/meta",
       body: meta.to_json,
       headers: { 'Content-Type' => 'application/json' }.merge(@auth))
-
-    if response["error"] == false
+    
+    unless response.nil? && response["error"] == true
       return response["data"]
     else
       raise response["reason"]

@@ -18,5 +18,14 @@ class TestWebsiteConversation < Test::Unit::TestCase
 		assert_not_nil @@cclient
 	end
 
-	require_relative "./website_conversation"
+	def test_create_a_conversation
+		@@session_id = @@cclient.create_a_new_conversation(website_id: @@website_id)["session_id"]
+		assert_not_nil @@session_id, 'Could not create a new conversation.'
+	end
+	
+	def test_update_conversation_metas
+		assert_not_nil @@session_id, "You must provide a session ID. Current session_id value: #{@@session_id}"
+		response = @@cclient.update_conversation_metas website_id: @@website_id, session_id: @@session_id, meta:  {nickname: "11test", email: "11test@t11.com", segments: ["test11"], data: {type: "test11", signup: "test11"}}
+		assert_not_nil response, "Current response value: #{response}, session_id: #{@@session_id}"
+	end
 end
