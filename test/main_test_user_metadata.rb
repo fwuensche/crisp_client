@@ -32,7 +32,9 @@ class TestWebsiteConversation < Test::Unit::TestCase
 	end
 
 	def test_find_person_by_email
-		response = @@cclient.list_people_profiles website_id: @@website_id,search_operator: "eq", search_filter: {model: "people", criterion: "email", operator: "eq", query: "lestat1700_2@hotmail.com"}
+		response = @@cclient.list_people_profiles website_id: @@website_id,search_operator: "eq", search_filter: 
+				{model: "people", criterion: "email", operator: "eq", query: ["lestat1700_2@hotmail.com"]}
 		assert_not_nil response, "Current response value: #{response}"
+		assert_equal response.length, 1, "This should isolate one user, instead received #{response.length}"
 	end
 end
