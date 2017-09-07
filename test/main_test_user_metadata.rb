@@ -25,7 +25,14 @@ class TestWebsiteConversation < Test::Unit::TestCase
 	
 	def test_update_conversation_metas
 		assert_not_nil @@session_id, "You must provide a session ID. Current session_id value: #{@@session_id}"
-		response = @@cclient.update_conversation_metas website_id: @@website_id, session_id: @@session_id, meta:  {nickname: "11test", email: "11test@t11.com", segments: ["test11"], data: {type: "test11", signup: "test11"}}
+		response = @@cclient.update_conversation_metas website_id: @@website_id, session_id: @@session_id, meta: 
+									{nickname: "11test", email: "11test@t11.com", segments: ["test11"], 
+									data: {type: "test11", signup: "test11"}}
 		assert_not_nil response, "Current response value: #{response}, session_id: #{@@session_id}"
+	end
+
+	def test_find_person_by_email
+		response = @@cclient.list_people_profiles website_id: @@website_id,search_operator: "eq", search_filter: {model: "people", criterion: "email", operator: "eq", query: "lestat1700_2@hotmail.com"}
+		assert_not_nil response, "Current response value: #{response}"
 	end
 end

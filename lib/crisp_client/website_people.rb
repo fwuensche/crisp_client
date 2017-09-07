@@ -33,9 +33,8 @@ module WebsitePeople
   end
 
   # https://docs.crisp.im/api/v1/#website-website-people-get-2
-  def list_people_profiles(website_id:, page_number: 1, sort_field: "nickname", sort_order: "ascending")
-    # TODO: accept params sort_field, sort_order, search_operator, search_filter
-    client_get("/website/#{website_id}/people/profiles/#{page_number}?sort_order=#{sort_order}")["data"]
+  def list_people_profiles(website_id:, page_number: 1, sort_field: "nickname", sort_order: "ascending", search_operator: "", search_filter: "")
+    client_get("/website/#{website_id}/people/profiles/#{page_number}?sort_order=#{sort_order}&search_operator=#{search_operator}&search_filter=#{search_filter.to_json.to_s}")["data"]
   end
 
   # https://docs.crisp.im/api/v1/#website-website-people-post
