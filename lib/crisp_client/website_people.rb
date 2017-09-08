@@ -25,6 +25,19 @@ module WebsitePeople
       raise response["reason"]
     end
   end
+  
+  #https://docs.crisp.chat/api/v1/#website-website-people-patch
+  def update_people_profile(website_id:, people_id:, profile_data:)
+    response = self.class.patch("/website/#{website_id}/people/profile/#{people_id}",
+      body: profile_data.to_json,
+      headers: { 'Content-Type' => 'application/json' }.merge(@auth))
+    
+    unless response.nil? && response["error"] == true
+      return response["data"]
+    else
+      raise response["reason"]
+    end
+  end
 
   # ***** TEMPORARY *****
 
@@ -49,11 +62,16 @@ module WebsitePeople
               {"model":"people","criterion":"person.employment.name","operator":"has","query":["#{search_filter}"]},
               {"model":"people","criterion":"person.geolocation.city","operator":"has","query":["#{search_filter}"]},
               {"model":"people","criterion":"person.geolocation.country","operator":"has","query":["#{search_filter}"]}].to_json
-
     filter = URI.encode(filter.to_s)
     filter = filter.gsub(/\[/, "%5B").gsub(/\]/, "%5D")
 
-    client_get("/website/#{website_id}/people/profiles/#{page_number}?search_filter=#{filter}&search_operator=#{search_operator}&sort_field=#{sort_field}&sort_order=#{sort_order}")["data"]
+    response = client_get("/website/#{website_id}/people/profiles/#{page_number}?search_filter=#{filter}&search_operator=#{search_operator}&sort_field=#{sort_field}&sort_order=#{sort_order}")
+
+    unless response.nil? && response["error"] == true
+      return response["data"]
+    else
+      raise response["reason"]
+    end
   end
 
   # https://docs.crisp.im/api/v1/#website-website-people-post

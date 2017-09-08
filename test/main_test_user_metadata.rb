@@ -13,7 +13,6 @@ class TestWebsiteConversation < Test::Unit::TestCase
 		@@cclient = CrispClient::Base.new email: ENV['CRISP_EMAIL'], password: ENV['CRISP_PASSWORD']
 		@@cclient.authenticate	
 		@@website_id = @@cclient.find_website_id_by_name website_name: ENV['CRISP_WEBSITE_NAME']
-		puts @@cclient
 		assert_not_nil @@website_id
 		assert_not_nil @@cclient
 	end
@@ -23,6 +22,27 @@ class TestWebsiteConversation < Test::Unit::TestCase
 		assert_not_nil @@session_id, 'Could not create a new conversation.'
 	end
 	
+	def test_find_person_by_email
+		response = @@cclient.list_people_profiles( website_id: @@website_id, search_filter: "test@email.com" )
+		response = Hash[*response]
+		@@people_id = response["people_id"]
+		
+		assert_not_nil @@people_id, "Current response value: #{@@people_id}"
+	end
+
+  def test_update_people_profile
+  	assert_not_nil @@people_id, "You must provide a person ID."
+  	
+  	response = @@cclient.update_people_profile website_id: @@website_id, people_id: @@people_id, 
+  								profile_data: { person: { phone: "9999-9999", nickname: "test nickname 2", 
+  																					address: "rua teste 99t", website: "http://teste.com"},
+  																segments: ["segmento 4", "segmento 3"], 
+  																company: { name: "Empresa teste" },
+  																geolocation: { city: "Cidade teste" } }
+ 
+  	assert_not_nil response, "Current response value: #{response}, person: #{@@people_id}"
+  end
+
 #	def test_update_conversation_metas
 #		assert_not_nil @@session_id, "You must provide a session ID. Current session_id value: #{@@session_id}"
 #		
@@ -34,10 +54,5 @@ class TestWebsiteConversation < Test::Unit::TestCase
 #		assert_not_nil response, "Current response value: #{response}, session_id: #{@@session_id}"
 #	end
 
-	def test_find_person_by_email
-		response = @@cclient.list_people_profiles website_id: @@website_id, search_filter: "test@email.com"
-		
-		assert_not_nil response, "Current response value: #{response}"
-		assert_equal response.length, 1, "This should isolate one user, instead received #{response.length}"
-	end
+
 end
