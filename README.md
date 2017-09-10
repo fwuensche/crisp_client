@@ -32,14 +32,14 @@ cc.list_people_profiles(website_id: website_id, page_number: 2, search_filter: "
 # Other parameters you can use include: sort_field, sort_order, search_operator, search_filter
 # The search_filter parameter is to be used exactly as in the dashboard, as in: "&search_filter="parameter"
 
-cc.update_conversation_metas website_id: @@website_id, session_id: @@session_id, 
+cc.update_conversation_metas website_id: website_id, session_id: session_id, 
 									meta: { nickname: "test nickname", email: "test@email.com", phone: "9999-9999", 
 													address: "rua teste 99t", segments: ["segmento 1", "segmento 2"], 
 									data: { teste_data: "data_teste_3", valorArbitrario: "teste arbitrário 3" } }
 # Updates the metadata from a specific conversation, given a session_id
 # Remember that conversation metadata is not equal to profile metadata. Each conversation has their own parameters.
 
-cc.update_people_profile website_id: @@website_id, people_id: @@people_id, 
+cc.update_people_profile website_id: website_id, people_id: people_id, 
   								profile_data: { person: { phone: "9999-9999", nickname: "test nickname 2", 
                                                 address: "rua teste 99t", website: "http://teste.com"},
                                     segments: ["segmento 4", "segmento 3"], 
