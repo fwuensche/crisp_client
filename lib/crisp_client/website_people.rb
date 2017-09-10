@@ -1,46 +1,4 @@
 module WebsitePeople
-  # ***** TEMPORARY *****
-  
-  # https://docs.crisp.chat/api/v1/#website-website-conversation-post
-	def create_a_new_conversation(website_id:)
-    response = self.class.post("/website/#{website_id}/conversation",
-      headers: { 'Content-Type' => 'application/json' }.merge(@auth))
-
-    if response["error"] == false
-      return response["data"]
-    else
-      raise response["reason"]
-    end
-  end
-  
-  # https://docs.crisp.chat/api/v1/#website-website-conversation-patch-4
-  def update_conversation_metas(website_id:, session_id:, meta:)
-    response = self.class.patch("/website/#{website_id}/conversation/#{session_id}/meta",
-      body: meta.to_json,
-      headers: { 'Content-Type' => 'application/json' }.merge(@auth))
-    
-    unless response.nil? && response["error"] == true
-      return response["data"]
-    else
-      raise response["reason"]
-    end
-  end
-  
-  #https://docs.crisp.chat/api/v1/#website-website-people-patch
-  def update_people_profile(website_id:, people_id:, profile_data:)
-    response = self.class.patch("/website/#{website_id}/people/profile/#{people_id}",
-      body: profile_data.to_json,
-      headers: { 'Content-Type' => 'application/json' }.merge(@auth))
-    
-    unless response.nil? && response["error"] == true
-      return response["data"]
-    else
-      raise response["reason"]
-    end
-  end
-
-  # ***** TEMPORARY *****
-
   # https://docs.crisp.im/api/v1/#website-website-people-get
   def get_people_statistics(website_id:)
     client_get("/website/#{website_id}/people/stats")["data"]
@@ -61,7 +19,9 @@ module WebsitePeople
               {"model":"people","criterion":"person.address","operator":"has","query":["#{search_filter}"]},
               {"model":"people","criterion":"person.employment.name","operator":"has","query":["#{search_filter}"]},
               {"model":"people","criterion":"person.geolocation.city","operator":"has","query":["#{search_filter}"]},
-              {"model":"people","criterion":"person.geolocation.country","operator":"has","query":["#{search_filter}"]}].to_json
+              {"model":"people","criterion":"person.geolocation.country","operator":"has","query":["#{search_filter}"]}]
+    
+    filter = filter.to_json
     filter = URI.encode(filter.to_s)
     filter = filter.gsub(/\[/, "%5B").gsub(/\]/, "%5D")
 
@@ -93,4 +53,18 @@ module WebsitePeople
       headers: { 'Content-Type' => 'application/json' }.merge(@auth))
     return response["reason"]
   end
+
+  #https://docs.crisp.chat/api/v1/#website-website-people-patch
+  def update_people_profile(website_id:, people_id:, profile_data:)
+    response = self.class.patch("/website/#{website_id}/people/profile/#{people_id}",
+      body: profile_data.to_json,
+      headers: { 'Content-Type' => 'application/json' }.merge(@auth))
+    
+    unless response.nil? && response["error"] == true
+      return response["data"]
+    else
+      raise response["reason"]
+    end
+  end
 end
+
