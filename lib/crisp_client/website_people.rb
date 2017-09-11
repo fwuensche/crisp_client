@@ -55,6 +55,21 @@ module WebsitePeople
     return response["reason"]
   end
 
+  # https://docs.crisp.chat/api/v1/#website-website-people-put-1
+  def save_people_data(website_id:, people_id:, user_data:)
+    response = self.class.put("/website/#{website_id}/people/data/#{people_id}",
+      body: user_data.to_json,
+      headers: { 'Content-Type' => 'application/json' }.merge(@auth))
+    
+    if response["data"].empty?
+      return nil 
+    elsif response["error"] == false
+      return response["data"]
+    else
+      raise response["reason"]
+    end
+  end
+
   #https://docs.crisp.chat/api/v1/#website-website-people-patch
   def update_people_profile(website_id:, people_id:, profile_data:)
     response = self.class.patch("/website/#{website_id}/people/profile/#{people_id}",
