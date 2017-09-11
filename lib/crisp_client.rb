@@ -12,7 +12,6 @@ module CrispClient
     include UserAvailability
     include ListWebsites
     include WebsitePeople
-    include URI
     include WebsiteConversation
 
     base_uri "https://api.crisp.im/v1"

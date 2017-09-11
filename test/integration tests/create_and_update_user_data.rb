@@ -47,7 +47,7 @@ class TestWebsiteConversation < Test::Unit::TestCase
   end
 
   def test_find_person_by_email
-  	@@people_id = @@cclient.list_people_profiles( website_id: @@website_id, search_filter: "test@email.com" ).first["people_id"]	
-  	assert_not_nil @@people_id, "Current response value: #{@@people_id}"
+    @@people_id = @@cclient.list_people_profiles( website_id: @@website_id, search_filter: "test@email.com" ).first["people_id"]	
+    assert_not_nil @@people_id, "Current response value: #{@@people_id}"
   end
 end
