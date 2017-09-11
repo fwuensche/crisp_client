@@ -17,40 +17,37 @@ class TestWebsiteConversation < Test::Unit::TestCase
 		assert_not_nil @@cclient
 	end
 
-	def test_create_a_conversation
+  def test_create_a_conversation
 		@@session_id = @@cclient.create_a_new_conversation( website_id: @@website_id )["session_id"]
 		assert_not_nil @@session_id, 'Could not create a new conversation.'
-	end
-	
-	def test_find_person_by_email
-		response = @@cclient.list_people_profiles( website_id: @@website_id, search_filter: "test@email.com" )
-		response = Hash[*response]
-		@@people_id = response["people_id"]
-		
-		assert_not_nil @@people_id, "Current response value: #{@@people_id}"
-	end
-
-  def test_update_people_profile
-  	assert_not_nil @@people_id, "You must provide a person ID."
-  	
-  	response = @@cclient.update_people_profile website_id: @@website_id, people_id: @@people_id, 
-  								profile_data: { person: { phone: "9999-9999", nickname: "test nickname 2", 
-  																					address: "rua teste 99t", website: "http://teste.com"},
-  																segments: ["segmento 4", "segmento 3"], 
-  																company: { name: "Empresa teste" },
-  																geolocation: { city: "Cidade teste" } }
- 
-  	assert_not_nil response, "Current response value: #{response}, person: #{@@people_id}"
   end
 
-	def test_update_conversation_metas
+  def test_update_people_profile
+ 	  assert_not_nil @@people_id, "You must provide a person ID."
+    
+ 	  response = @@cclient.update_people_profile website_id: @@website_id, people_id: @@people_id, 
+ 	  							profile_data: { person: { phone: "9999-9999", nickname: "test nickname 2", 
+ 	  																				address: "rua teste 99t", website: "http://teste.com"},
+ 	  															segments: ["segmento 4", "segmento 3"], 
+ 	  															company: { name: "Empresa teste" },
+ 	  															geolocation: { city: "Cidade teste" } }
+
+ 	  assert_not_nil response, "Current response value: #{response}, person: #{@@people_id}"
+  end
+
+  def test_update_conversation_metas
 		assert_not_nil @@session_id, "You must provide a session ID. Current session_id value: #{@@session_id}"
 
 		response = @@cclient.update_conversation_metas website_id: @@website_id, session_id: @@session_id, 
-									meta: { nickname: "test nickname", email: "test@email.com", phone: "9999-9999", 
-													address: "rua teste 99t", segments: ["segmento 1", "segmento 2"], 
-									data: { teste_data: "data_teste_3", valorArbitrario: "teste arbitrário 3" } }
+									meta: { nickname: "nickname test", email: "test_2@email.com", phone: "8888-8888", 
+													address: "999st teste rua", segments: ["segmento 6", "segmento 11"], 
+									data: { teste_data: "data_teste_5", valorArbitrario: "teste arbitrário 99" } }
 
 		assert_not_nil response, "Current response value: #{response}, session_id: #{@@session_id}"
-	end
+  end
+
+  def test_find_person_by_email
+  	@@people_id = @@cclient.list_people_profiles( website_id: @@website_id, search_filter: "test@email.com" ).first["people_id"]	
+  	assert_not_nil @@people_id, "Current response value: #{@@people_id}"
+  end
 end

@@ -26,8 +26,9 @@ module WebsitePeople
     filter = filter.gsub(/\[/, "%5B").gsub(/\]/, "%5D")
 
     response = client_get("/website/#{website_id}/people/profiles/#{page_number}?search_filter=#{filter}&search_operator=#{search_operator}&sort_field=#{sort_field}&sort_order=#{sort_order}")
-
-    unless response.nil? && response["error"] == true
+    if response["data"].empty?
+      return nil 
+    elsif response["error"] == false
       return response["data"]
     else
       raise response["reason"]
