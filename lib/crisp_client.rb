@@ -16,9 +16,13 @@ module CrispClient
 
     base_uri "https://api.crisp.im/v1"
 
-    def initialize(email:, password:)
-      @email = email
-      @password = password
+    def initialize(options)
+      if options[:stored_key]
+        @auth = { "Authorization" => "Basic #{options[:stored_key]}" }
+      else
+        @email = options[:email]
+        @password = options[:password]
+      end
     end
 
     def authenticate
@@ -29,7 +33,8 @@ module CrispClient
       identifier  = res.parsed_response["data"]["identifier"]
       key         = res.parsed_response["data"]["key"]
       base64      = Base64.strict_encode64 [identifier, key].join(":")
-      @auth       = { "Authorization" => "Basic #{base64}" }
+      @auth = { "Authorization" => "Basic #{base64}" }
+      return base64
     end
 
     private
