@@ -22,6 +22,11 @@ class TestWebsiteConversation < Test::Unit::TestCase
     assert_not_nil @@website_id, 'Did not find website when using stored key'
   end
 
+	def test_find_person_by_email
+    @@people_id = @@cclient.list_people_profiles( website_id: @@website_id, search_filter: "test@email.com" ).first["people_id"]	
+    assert_not_nil @@people_id, "Current response value: #{@@people_id}"
+	end
+	
   def test_create_a_conversation
     @@session_id = @@cclient.create_a_new_conversation( website_id: @@website_id )["session_id"]
     assert_not_nil @@session_id, 'Could not create a new conversation.'
@@ -51,8 +56,15 @@ class TestWebsiteConversation < Test::Unit::TestCase
     assert_not_nil response, "Current response value: #{response}, session_id: #{@@session_id}"
   end
 
+	def test_save_people_data
+		assert_not_nil @@people_id, "You must provide a people ID"
+		assert_not_nil @@website_id, "You must provide a website ID"
+		@@cclient.save_people_data website_id: @@website_id, people_id: @@people_id, user_data: { data: { abcde: "12345" }}
+	end
+
   def test_find_person_by_email
     @@people_id = @@cclient.list_people_profiles( website_id: @@website_id, search_filter: "test@email.com" ).first["people_id"]
     assert_not_nil @@people_id, "Current response value: #{@@people_id}"
   end
 end
+
