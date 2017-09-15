@@ -56,11 +56,11 @@ class TestWebsiteConversation < Test::Unit::TestCase
     assert_not_nil response, "Current response value: #{response}, session_id: #{@@session_id}"
   end
 
-	def test_save_people_data
-		assert_not_nil @@people_id, "You must provide a people ID"
-		assert_not_nil @@website_id, "You must provide a website ID"
-		@@cclient.save_people_data website_id: @@website_id, people_id: @@people_id, user_data: { abcde: "123asdasd45" }
-	end
+  def test_save_people_data
+    assert_not_nil @@people_id, "You must provide a people ID"
+    assert_not_nil @@website_id, "You must provide a website ID"
+    @@cclient.save_people_data website_id: @@website_id, people_id: @@people_id, user_data: { abcde: "123asdasd45" }
+  end
 
   def test_find_person_by_email
     @@people_id = @@cclient.list_people_profiles( website_id: @@website_id, search_filter: "test@email.com" ).first["people_id"]
