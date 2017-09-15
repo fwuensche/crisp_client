@@ -57,8 +57,10 @@ module WebsitePeople
 
   # https://docs.crisp.chat/api/v1/#website-website-people-put-1
   def save_people_data(website_id:, people_id:, user_data:)
+    formatted_data = { data: user_data }
+
     response = self.class.put("/website/#{website_id}/people/data/#{people_id}",
-      body: user_data.to_json,
+      body: formatted_data.to_json,
       headers: { 'Content-Type' => 'application/json' }.merge(@auth))
     
     if response["data"].empty?
