@@ -73,13 +73,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/crisp_client.
-
-While debugging you might need to reload edited files:
-
-```ruby
-load '/Users/fwuensche/www/crisp_client/lib/crisp_client/website_people.rb'
-```
+Bug reports and pull requests are welcome on GitHub at https://github.com/fwuensche/crisp_client
 
 ## License
 
