@@ -1,0 +1,25 @@
+PATH
+  remote: .
+  specs:
+    crisp_client (0.2.7)
+      httparty
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    httparty (0.21.0)
+      mini_mime (>= 1.0.0)
+      multi_xml (>= 0.5.2)
+    mini_mime (1.1.2)
+    multi_xml (0.6.0)
+    rake (10.5.0)
+
+PLATFORMS
+  arm64-darwin-21
+
+DEPENDENCIES
+  crisp_client!
+  rake (~> 10.0)
+
+BUNDLED WITH
+   2.3.7
